@@ -1,0 +1,26 @@
+<h2>Coroner's Report Contract</h2>
+
+<p>This contract is managed by {{ manager }} </p>
+
+<hr>
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+                <div id="user-data">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input 
+                        type="text"
+                        id="name"
+                        class="form-control"
+                        ngModel
+                        name="name">
+                    </div>
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,13 +1,13 @@
 pragma solidity ^0.4.17;
 
-contract Lottery {
-    struct Report {
+contract Report {
+    struct CoronerReport {
         string name;
         address recipient;
     }
     
     
-    Report[] public reports;
+    CoronerReport[] public reports;
     address public manager;
     address[] public players;
     
@@ -40,7 +40,7 @@ contract Lottery {
     }
 
     function createReport(string name, address recipient) {
-        Report memory newReport = Report ({
+        CoronerReport memory newReport = CoronerReport ({
             name: name,
             recipient: recipient
         });

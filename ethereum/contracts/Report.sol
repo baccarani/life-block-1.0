@@ -11,7 +11,7 @@ contract Report {
     address public manager;
     address[] public players;
     
-    function Lottery() public {
+    function Report() public {
         manager = msg.sender;
     }
     

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import web3 from '../web3';
-import lottery from '../lottery';
+import report from '../report';
 import { NgForm } from '@angular/forms';
 
 
@@ -14,6 +14,7 @@ export class HealthCareComponent implements OnInit {
   public manager;
   public players;
   public balance;
+  public reports;
 
   constructor() { }
 
@@ -26,15 +27,15 @@ export class HealthCareComponent implements OnInit {
   }
 
   async ngAfterContentInit() {
-    this.manager = await lottery.methods.manager().call();
+    this.manager = await report.methods.manager().call();
     console.log('This contract is managed by ' + this.manager);
 
-    this.players = await lottery.methods.getPlayers().call();
-    console.log(this.players)
+    this.players = await report.methods.getPlayers().call();
+    console.log('Function getPlayers() = ' + this.players)
 
-    this.balance = await web3.eth.getBalance(lottery.options.address);
+    this.balance = await web3.eth.getBalance(report.options.address);
     this.balance = web3.utils.fromWei(this.balance, 'ether')
-    console.log(this.balance)
+    console.log('Function getBalance() = ' + this.balance)
 
   }
 
@@ -50,7 +51,16 @@ export class HealthCareComponent implements OnInit {
     const accounts = await web3.eth.getAccounts();
     console.log(accounts); 
 
+
+
     // await report.methods.createRequest()
+
+    console.log(form.value.name)
+
+
+
+    this.reports = await report.methods.createReport(form.value.name, this.manager).send({ from: this.manager });
+    console.log('Function createRport is called and = ' + this.reports)
 
   }
 

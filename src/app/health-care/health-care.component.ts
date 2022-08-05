@@ -15,6 +15,12 @@ export class HealthCareComponent implements OnInit {
   public players;
   public balance;
   public reports;
+  public reportCount;
+  public reportList;
+  
+
+    
+
 
   constructor() { }
 
@@ -37,11 +43,13 @@ export class HealthCareComponent implements OnInit {
     this.balance = web3.utils.fromWei(this.balance, 'ether')
     console.log('Function getBalance() = ' + this.balance)
 
+    console.log('Function getReportsCount() to display list array of  Reports = ' + this.reportList);
+
   }
 
 
 
-  onSubmit = async (form: NgForm) => {
+  onSubmit = async (form: NgForm) => { 
     event.preventDefault();
     console.log(form);
 
@@ -56,6 +64,21 @@ export class HealthCareComponent implements OnInit {
     // await report.methods.createRequest()
 
     console.log(form.value.name)
+
+
+
+    // return reports 
+
+    this.reportCount =  report.methods.getReportsCount().call();
+    console.log('Function getReportsCount() works, Type reportCount = ' + this.reportCount)
+
+    this.reportList =  Promise.all(
+      Array(parseInt(this.reportCount))
+        .fill(0, this.reportCount)
+        .map((element, index) => {
+          return report.methods.requests(index).call();
+        })
+    );
 
 
 

@@ -47,4 +47,8 @@ contract Report {
 
         reports.push(newReport);
     }
+
+    function getReportsCount() public view returns (uint) {
+        return reports.length;
+    }
 }   

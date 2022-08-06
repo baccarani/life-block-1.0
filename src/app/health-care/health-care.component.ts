@@ -17,6 +17,7 @@ export class HealthCareComponent implements OnInit {
   public reports;
   public reportCount;
   public reportList;
+  public reportStruct;
   
 
     
@@ -46,6 +47,8 @@ export class HealthCareComponent implements OnInit {
     console.log('Function getReportsCount() to display list array of  Reports = ' + this.reportList);
 
     
+    this.reportStruct = await report.methods.getReports().call();
+    console.log('Report struct = ' + this.reportStruct);
 
   }
 
@@ -83,13 +86,28 @@ export class HealthCareComponent implements OnInit {
 
     this.reportCount =  await report.methods.getReportsCount().call();
 
+    // prints the name and address for each report in the list
+    for (let i = 0; i < this.reportList.length; i++) {
+      console.log('name: ' + this.reportList[i].name);
+      console.log('address: ' + this.reportList[i].address);
+    }
 
 
 
     this.reports = await report.methods.createReport(form.value.name, this.manager).send({ from: this.manager });
     console.log('Function createReport is called and = ' + this.reports)
     console.log('Function getReportsCount() works, Type reportCount = ' + this.reportCount);
-    console.log('Type reportList = ' + this.reportList[0].name);
+
+
+
+    
+    this.reportStruct = await report.methods.getReports().call();
+    console.log('Report struct = ' + this.reportStruct);
+
+
+
+    
+
 
 
   }

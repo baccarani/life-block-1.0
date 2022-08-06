@@ -1,6 +1,6 @@
 const HDWalletProvider = require('@truffle/hdwallet-provider');
 const Web3 = require('web3');
-const { interface, bytecode } = require('./compile');
+const { interface, bytecode } = require('./compile-report');
 
 const provider = new HDWalletProvider(
   'code trigger dentist seven biology path under slam ticket breeze rough staff',

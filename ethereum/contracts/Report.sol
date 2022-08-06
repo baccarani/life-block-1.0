@@ -2,13 +2,22 @@ pragma solidity ^0.4.17;
 pragma experimental ABIEncoderV2;
 
 contract Report {
-    struct CoronerReport {
-        string name;
+    struct DeathReport {
         address recipient;
+        string name;
+        string dateOfDeath;
+        string timeOfDeath;
+        string placeOfDeath;
+        string city;
+        string postalCode;
+        string country;
+        string province;
+        string medicalCauseOfDeath;
+        string meansOfDeath;
     }
     
     
-    CoronerReport[] public reports;
+    DeathReport[] public reports;
     address public manager;
     address[] public players;
     
@@ -40,14 +49,23 @@ contract Report {
         return players;
     }
 
-    function getReports() public view returns (CoronerReport[]) {
+    function getReports() public view returns (DeathReport[]) {
         return reports;
     }
 
-    function createReport(string name, address recipient) {
-        CoronerReport memory newReport = CoronerReport ({
+    function createReport(address recipient, string name, string dateOfDeath, string timeOfDeath, string placeOfDeath, string city, string postalCode, string country, string province, string medicalCauseOfDeath, string meansOfDeath) {
+        DeathReport memory newReport = DeathReport ({
+            recipient: recipient,
             name: name,
-            recipient: recipient
+            dateOfDeath: dateOfDeath,
+            timeOfDeath: timeOfDeath,
+            placeOfDeath: placeOfDeath,
+            city: city,
+            postalCode: postalCode,
+            country: country,
+            province: province,
+            medicalCauseOfDeath: medicalCauseOfDeath,
+            meansOfDeath: meansOfDeath
         });
 
         reports.push(newReport);

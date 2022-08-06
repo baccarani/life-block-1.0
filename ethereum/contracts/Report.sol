@@ -39,6 +39,10 @@ contract Report {
         return players;
     }
 
+    function getReports() public view returns (CoronerReport[]) {
+        return reports;
+    }
+
     function createReport(string name, address recipient) {
         CoronerReport memory newReport = CoronerReport ({
             name: name,

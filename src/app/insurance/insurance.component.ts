@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import web3 from '../web3';
 import policy from '../policy';
+import { BlockchainService } from '../blockchain.service';
 
 @Component({
   selector: 'app-insurance',
@@ -11,9 +12,10 @@ export class InsuranceComponent implements OnInit {
 
   public beneficiaries;
 
-  constructor() { }
+  constructor(private blockchainService: BlockchainService) { }
 
   ngOnInit(): void {
+    this.blockchainService.sharedMessage.subscribe(reportStruct => console.log(reportStruct));
   }
 
 

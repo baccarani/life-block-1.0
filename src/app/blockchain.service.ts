@@ -1,17 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import web3 from '../web3';
-import report from '../report';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import web3 from './web3';
+import report from './report';
 import { NgForm } from '@angular/forms';
-import { BlockchainService } from '../blockchain.service';
 
 
-@Component({
-  selector: 'app-health-care',
-  templateUrl: './health-care.component.html',
-  styleUrls: ['./health-care.component.css'],
-  providers: [BlockchainService]
-})
-export class HealthCareComponent implements OnInit {
+@Injectable()
+export class BlockchainService {
+
+  private subject = new BehaviorSubject('First Message');
+  sharedMessage = this.subject.asObservable();
+
+
+
 
   public manager;
   public players;
@@ -19,13 +20,36 @@ export class HealthCareComponent implements OnInit {
   public reports;
   public reportCount;
   public reportList;
-  public reportStruct;
+  public reportStruct = this.subject.asObservable();
   
 
-    
 
 
-  constructor(private blockchainService: BlockchainService) { }
+
+
+  constructor() { }
+
+
+
+
+
+
+
+  
+
+
+  nextMessage(reportStruct: string) {
+    this.subject.next(reportStruct)
+  }
+
+
+
+
+
+
+
+
+
 
   ngOnInit(): void {
 
@@ -33,14 +57,11 @@ export class HealthCareComponent implements OnInit {
 
     web3.eth.getAccounts().then(console.log);
 
-    this.blockchainService
-
   }
 
   async ngAfterContentInit() {
     this.manager = await report.methods.manager().call();
-    console.log('This contract is managed by = ' + this.manager);
-    console.log('This contract is managed by (BlockchainService) = ' + this.blockchainService.manager);
+    console.log('This contract is managed by ' + this.manager);
 
     this.players = await report.methods.getPlayers().call();
     console.log('Function getPlayers() = ' + this.players)
@@ -57,9 +78,7 @@ export class HealthCareComponent implements OnInit {
 
     
     this.reportStruct = await report.methods.getReports().call();
-    this.blockchainService.nextMessage(this.reportStruct);
-    console.log('Report struct from BlockchainService = ' + this.blockchainService.getReportStruct()); 
-    console.log('Report struct = ' + this.reportStruct); 
+    console.log('Report struct = ' + this.reportStruct);
     console.log('Report struct one whole item = ' + this.reportStruct[0]);
     console.log('Report struct name = ' + this.reportStruct[0].name);
 
@@ -70,6 +89,8 @@ export class HealthCareComponent implements OnInit {
 
     
   }
+
+
 
 
 
@@ -105,10 +126,10 @@ export class HealthCareComponent implements OnInit {
     this.reportCount =  await report.methods.getReportsCount().call();
 
     // prints the name and address for each report in the list
-    for (let i = 0; i < this.reportStruct.length; i++) {
-      console.log('name: ' + this.reportStruct[i].name);
-      console.log('address: ' + this.reportStruct[i].address);
-    }
+    // for (let i = 0; i < this.reportStruct.length; i++) {
+    //  console.log('name: ' + this.reportStruct[i].name);
+    //  console.log('address: ' + this.reportStruct[i].address);
+    // }
 
 
 
@@ -130,5 +151,21 @@ export class HealthCareComponent implements OnInit {
 
 
   }
+
+
+
+
+
+
+
+
+
+
+
+  async getReportStruct() {
+    this.reportStruct = await report.methods.getReports().call();
+  }
+
+
 
 }

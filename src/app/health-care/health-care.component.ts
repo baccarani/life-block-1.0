@@ -45,6 +45,8 @@ export class HealthCareComponent implements OnInit {
 
     console.log('Function getReportsCount() to display list array of  Reports = ' + this.reportList);
 
+    
+
   }
 
 
@@ -69,8 +71,7 @@ export class HealthCareComponent implements OnInit {
 
     // return reports 
 
-    this.reportCount =  report.methods.getReportsCount().call();
-    console.log('Function getReportsCount() works, Type reportCount = ' + this.reportCount)
+    this.reportCount =  await report.methods.getReportsCount().call();
 
     this.reportList =  Promise.all(
       Array(parseInt(this.reportCount))
@@ -80,10 +81,16 @@ export class HealthCareComponent implements OnInit {
         })
     );
 
+    this.reportCount =  await report.methods.getReportsCount().call();
+
+
 
 
     this.reports = await report.methods.createReport(form.value.name, this.manager).send({ from: this.manager });
-    console.log('Function createRport is called and = ' + this.reports)
+    console.log('Function createReport is called and = ' + this.reports)
+    console.log('Function getReportsCount() works, Type reportCount = ' + this.reportCount);
+    console.log('Type reportList = ' + this.reportList[0].name);
+
 
   }
 

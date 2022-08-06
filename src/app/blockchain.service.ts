@@ -38,7 +38,7 @@ export class BlockchainService {
   
 
 
-  nextMessage(reportStruct: string) {
+  nextMessage(reportStruct) {
     this.subject.next(reportStruct)
   }
 

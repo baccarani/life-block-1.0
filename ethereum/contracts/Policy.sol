@@ -6,8 +6,8 @@ contract Policy {
     
     function Policy() public {
         policyHolder = msg.sender;
-        beneficiaries.push(0x5B38Da6a701c568545dCfcB03FcB875f56beddC4);
-        beneficiaries.push(0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2);
+        beneficiaries.push(0x519b72B7E5658dD236E1ed55a687D9f1118d1a60);
+        beneficiaries.push(0x832D3Ae442ef5f027B0b15e0e9203Bc40CA89f24);
     }
     
     function enter() public payable {
@@ -15,9 +15,8 @@ contract Policy {
     }
     
     function payBeneficiaries() public restricted {
-        for (uint i = 0; i < beneficiaries.length; i++) {
-            beneficiaries[i].transfer(this.balance / beneficiaries.length);
-        }
+        beneficiaries[0].transfer(this.balance / 2);
+        beneficiaries[1].transfer(this.balance);
     }
     
     modifier restricted() {
@@ -27,5 +26,9 @@ contract Policy {
     
     function getBeneficiaries() public view returns (address[]) {
         return beneficiaries;
+    }
+
+    function getBalance() external view returns (uint256) {
+        return address(this).balance;
     }
 }   

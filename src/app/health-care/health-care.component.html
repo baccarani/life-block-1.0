@@ -1,13 +1,42 @@
-<h2>Death Report Contract</h2>
-
-<p>This contract is managed by {{ manager }} </p>
-
+<!-- <h2>Life Insurance Policy Contract</h2>
+<p>This contract is managed by {{ manager }}. The beneficiaries of this Life Insurance policy are:</p>
+<li> {{beneficiaries[0]}}</li>
+<li> {{beneficiaries[1]}}</li>
 <hr>
 
 <div class="container">
     <div class="row">
         <div class="col-xs-12">
-            <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+            <form (ngSubmit)="onEnter(p)" #p="ngForm">
+                <div id="user-data">
+                    <div class="form-group">
+                        <label for="amount">Amount = {{balance}} Ether</label>
+                        <input 
+                        type="text"
+                        id="amount"
+                        class="form-control"
+                        ngModel
+                        name="amount">
+                    </div>
+                    <button class="btn btn-primary" type="submit" style='margin-right:16px'>Enter Amount</button>
+                    <button class="btn btn-default" type="button" style='margin-right:16px' (click)="payBeneficiaries()">Pay Beneficiaries</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<br> <br> <br> -->
+
+<h2>Death Certificate Contract</h2>
+<p>A lump-sum pay-out will be made to the beneficiaries if the "Means of death" is not "Undetermined"</p>
+
+<hr>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <form (ngSubmit)="onSubmit(r)" #r="ngForm">
                 <div id="user-data">
                     <div class="form-group">
                         <label for="name">Name</label>
@@ -19,31 +48,31 @@
                         name="name">
                     </div>
                     <div class="form-group">
-                        <label for="date-of-death">Date of death</label>
+                        <label for="dateOfDeath">Date of death</label>
                         <input 
-                        type="text"
-                        id="date-of-death"
+                        type="date"
+                        id="dateOfDeath"
                         class="form-control"
                         ngModel
-                        name="date-of-death">
+                        name="dateOfDeath">
                     </div>
                     <div class="form-group">
-                        <label for="time-of-death">Time of death</label>
+                        <label for="timeOfDeath">Time of death</label>
                         <input 
-                        type="text"
-                        id="time-of-death"
+                        type="time"
+                        id="timeOfDeath"
                         class="form-control"
                         ngModel
-                        name="time-of-death">
+                        name="timeOfDeath">
                     </div>
                     <div class="form-group">
-                        <label for="place-of-death">Place of death (name of facility or location)</label>
+                        <label for="placeOfDeath">Place of death (name of facility or location)</label>
                         <input 
                         type="text"
-                        id="place-of-death"
+                        id="placeOfDeath"
                         class="form-control"
                         ngModel
-                        name="place-of-death">
+                        name="placeOfDeath">
                     </div>
                     <div class="form-group">
                         <label for="city">City</label>
@@ -55,16 +84,69 @@
                         name="city">
                     </div>
                     <div class="form-group">
-                        <label for="postal-code">Postal code</label>
+                        <label for="postalCode">Postal code</label>
                         <input 
                         type="text"
-                        id="postal-code"
+                        id="postalCode"
                         class="form-control"
                         ngModel
-                        name="postal-code">
+                        name="postalCode">
                     </div>
                     <div class="form-group">
-                        <label for="name">Medical cause of death</label>
+                        <label for="country">Country</label>
+                        <input 
+                        type="text"
+                        id="country"
+                        class="form-control"
+                        ngModel
+                        name="country">
+                    </div>
+                    <div class="form-group">
+                        <label for="province">Province</label>
+                        <input 
+                        type="text"
+                        id="province"
+                        class="form-control"
+                        ngModel
+                        name="province">
+                    </div>
+                    <!-- <div class="form-group">
+                        <label for="medicalCauseOfDeath">Medical cause of death</label><br>
+                        <div>
+                            <input type="radio" id="heartDisease" value="heartDisease" name="medicalCauseOfDeath" ngModel>
+                            <label for="heartDisease">Heart Disease</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="cancer" value="cancer" name="medicalCauseOfDeath" ngModel>
+                            <label for="cancer">Cancer</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="covid19" value="covid19" name="medicalCauseOfDeath" ngModel>
+                            <label for="covid19">COVID-19</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="accident" value="accident" name="medicalCauseOfDeath" ngModel>
+                            <label for="accident">Accident</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="drowning" value="drowning" name="medicalCauseOfDeath" ngModel>
+                            <label for="drowning">Drowning</label>
+                        </div>
+                    </div> -->
+                    <div class="form-group">
+                        <label for="medicalCauseOfDeaths">Medical cause of death</label><br>
+                        <select name="medicalCauseOfDeaths" id="medicalCauseOfDeaths" ngModel>
+                            <option *ngFor="let medicalCause of medicalCauses" value={{medicalCause}}>{{medicalCause}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="meansOfDeath">Means of death</label><br>
+                        <select name="meansOfDeaths" id="meansOfDeaths" ngModel>
+                            <option *ngFor="let meansOfDeath of meansOfDeaths" value={{meansOfDeath}}>{{meansOfDeath}}</option>
+                        </select>
+                    </div> <br>
+                    <!-- <div class="form-group">
+                        <label for="medical-cause-of-death">Medical cause of death</label>
                         <input 
                         type="text"
                         id="medical-cause-of-death"
@@ -72,9 +154,19 @@
                         ngModel
                         name="medical-cause-of-death">
                     </div>
-                    <button class="btn btn-primary" type="submit">Submit</button>
+                    <div class="form-group">
+                        <label for="means-of-death">Means of death</label>
+                        <input 
+                        type="text"
+                        id="means-of-death"
+                        class="form-control"
+                        ngModel
+                        name="means-of-death">
+                    </div> -->
+                    <button class="btn btn-primary" type="submit" style='margin-right:16px'>Submit</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+<br> <br> <br>

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import web3 from './web3';
 import report from './report';
+import policy from './policy';
 import { NgForm } from '@angular/forms';
 
 
@@ -167,5 +168,18 @@ export class BlockchainService {
   }
 
 
+
+  async payBeneficiaries(lastArrayItem) {
+    
+     if (this.reportStruct[lastArrayItem].meansOfDeaths != 'Undetermined') {
+        await policy.methods.payBeneficiaries().send({from : this.manager});
+        console.log('Beneficiaries paid-out');
+
+
+      } else {
+        console.log('Beneficiaries not paid-out')
+      }
+    
+  }
 
 }

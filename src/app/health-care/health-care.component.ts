@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import web3 from '../web3';
 import report from '../report';
+import policy from '../policy';
 import { NgForm } from '@angular/forms';
 import { BlockchainService } from '../blockchain.service';
 
@@ -20,6 +21,10 @@ export class HealthCareComponent implements OnInit {
   public reportCount;
   public reportList;
   public reportStruct;
+  public medicalCauses = ['Heart Disease', 'Cancer', 'COVID-19', 'Accidents', 'Drowning'];
+  public meansOfDeaths = ['Natural Cause', 'Accident', 'Homicide', 'Suicide', 'Undetermined'];
+  public beneficiaries = [];
+
   
 
     
@@ -27,13 +32,18 @@ export class HealthCareComponent implements OnInit {
 
   constructor(private blockchainService: BlockchainService) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
 
     console.log('Web3 version = ' + web3.version);
 
     web3.eth.getAccounts().then(console.log);
 
-    this.blockchainService
+    this.balance = await web3.eth.getBalance(policy.options.address);
+    this.balance = web3.utils.fromWei(this.balance, 'ether');
+    console.log('Function getBalance() works, balance = ' + this.balance);
+
+    this.beneficiaries = await policy.methods.getBeneficiaries().call();
+    console.log('Function getBeneficiaries() = ' + this.beneficiaries);
 
   }
 
@@ -45,9 +55,6 @@ export class HealthCareComponent implements OnInit {
     this.players = await report.methods.getPlayers().call();
     console.log('Function getPlayers() = ' + this.players)
 
-    this.balance = await web3.eth.getBalance(report.options.address);
-    this.balance = web3.utils.fromWei(this.balance, 'ether')
-    console.log('Function getBalance() = ' + this.balance)
 
     console.log('Function getReportsCount() to display list array of  Reports = ' + this.reportList);
 
@@ -61,20 +68,24 @@ export class HealthCareComponent implements OnInit {
     console.log('Report struct from BlockchainService = ' + this.blockchainService.getReportStruct()); 
     console.log('Report struct = ' + this.reportStruct); 
     console.log('Report struct one whole item = ' + this.reportStruct[0]);
-    console.log('Report struct name = ' + this.reportStruct[0].name);
+    // console.log('Report struct name = ' + this.reportStruct[0].name);
 
 
     console.log('Function createReport is called and = ' + this.reports);
 
 
+    this.reportCount =  await report.methods.getReportsCount().call();
+    console.log(this.reportCount - 1)
+    console.log('Report struct meansofDeath = ' + this.reportStruct[this.reportCount - 1].meansOfDeath);
 
+    
     
   }
 
 
 
   onSubmit = async (form: NgForm) => { 
-    event.preventDefault();
+    console.log("onSubmit function called")
     console.log(form);
 
 
@@ -94,39 +105,110 @@ export class HealthCareComponent implements OnInit {
     // return reports 
 
 
-    this.reportList =  Promise.all(
-      Array(parseInt(this.reportCount))
-        .fill(0, this.reportCount)
-        .map((element, index) => {
-          return report.methods.requests(index).call();
-        })
-    );
+    // this.reportList =  Promise.all(
+    //   Array(parseInt(this.reportCount))
+    //     .fill(0, this.reportCount)
+    //     .map((element, index) => {
+    //       return report.methods.requests(index).call();
+    //     })
+    // );
 
-    this.reportCount =  await report.methods.getReportsCount().call();
+
 
     // prints the name and address for each report in the list
-    for (let i = 0; i < this.reportStruct.length; i++) {
-      console.log('name: ' + this.reportStruct[i].name);
-      console.log('address: ' + this.reportStruct[i].address);
-    }
+    // for (let i = 0; i < this.reportStruct.length; i++) {
+    //   console.log('name: ' + this.reportStruct[i].name);
+    //   console.log('address: ' + this.reportStruct[i].address);
+    // }
 
 
 
-    this.reports = await report.methods.createReport(form.value.name, this.manager).send({ from: this.manager });
-    console.log('Function createReport is called and = ' + this.reports)
+    console.log(this.manager);
+    console.log(form.value.name);
+    console.log(form.value.dateOfDeath);
+    console.log(form.value.timeOfDeath);
+    console.log(form.value.placeOfDeath);
+    console.log(form.value.city);
+    console.log(form.value.postalCode);
+    console.log(form.value.country);
+    console.log(form.value.province);
+    console.log(form.value.medicalCauseOfDeaths);
+    console.log(form.value.meansOfDeaths);
+    
+    await report.methods.createReport(this.manager, form.value.name, form.value.dateOfDeath, form.value.timeOfDeath, form.value.placeOfDeath, form.value.city, form.value.postalCode, form.value.country, form.value.province, form.value.medicalCauseOfDeaths, form.value.meansOfDeaths).send({ from: this.manager });
 
 
-
+    this.reportCount =  await report.methods.getReportsCount().call();
+    console.log('Report Count = ' + this.reportCount)
     
     this.reportStruct = await report.methods.getReports().call();
     console.log('Function getReportsCount() works, Type reportCount = ' + this.reportCount);
     console.log('Report struct = ' + this.reportStruct);
-    console.log('Report struct name = ' + this.reportStruct[0].name);
+    console.log('Report struct name = ' + this.reportStruct[this.reportCount - 1].meansOfDeath);
+
+    for (let index = 0; index < this.reportStruct.length; index++) {
+      console.log(this.reportStruct[index]);
+    }
+
+
+
+
+    
+    if (this.reportStruct[this.reportCount - 1].meansOfDeath != 'Undetermined') {
+      await policy.methods.payBeneficiaries().send({from : this.manager});
+      console.log('Beneficiaries paid-out');
+      this.balance = await web3.eth.getBalance(policy.options.address);
+      this.balance = web3.utils.fromWei(this.balance, 'ether');
+      console.log('Function getBalance() works, balance = ' + this.balance);
+
+
+
+    } else {
+      console.log('Beneficiaries not paid-out')
+      this.balance = await web3.eth.getBalance(policy.options.address);
+      this.balance = web3.utils.fromWei(this.balance, 'ether');
+      console.log('Function getBalance() works, balance = ' + this.balance);
+    }
+
+
+
+
 
 
 
     
 
+
+
+  }
+
+
+  async payBeneficiaries() {
+    if (this.reportStruct[this.reportCount - 1].meansOfDeath != 'Undetermined') {
+      await policy.methods.payBeneficiaries().send({from : this.manager});
+      console.log('Beneficiaries paid-out');
+
+
+    } else {
+      console.log('Beneficiaries not paid-out')
+    }
+  }
+
+
+  async onEnter(form: NgForm) {
+    await policy.methods.enter().send({
+      from: this.manager,
+      value: web3.utils.toWei(form.value.amount, 'ether')
+    });
+
+
+    this.balance = await web3.eth.getBalance(policy.options.address);
+    this.balance = web3.utils.fromWei(this.balance, 'ether');
+
+
+    console.log('Function onEnter() complete, amount entered is = ' + web3.utils.toWei(form.value.amount, 'ether'));
+    
+    
 
 
   }

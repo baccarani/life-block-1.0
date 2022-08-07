@@ -1,1 +1,29 @@
 <h2>Insurance Policy Contract</h2>
+
+<p>This contract is managed by {{ manager }}. The beneficiaries of this Life Insurance policy are:</p>
+<li> {{beneficiaries[0]}}</li>
+<li> {{beneficiaries[1]}}</li>
+
+<hr>
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <form (ngSubmit)="onEnter(f)" #f="ngForm">
+                <div id="user-data">
+                    <div class="form-group">
+                        <label for="amount">Amount = {{balance}} Ether</label>
+                        <input 
+                        type="text"
+                        id="amount"
+                        class="form-control"
+                        ngModel
+                        name="amount">
+                    </div>
+                    <button class="btn btn-primary" type="submit" style='margin-right:16px'>Enter Amount</button>
+                    <button class="btn btn-default" type="submit" style='margin-right:16px' (click)="payBeneficiaries()">Pay Beneficiaries</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

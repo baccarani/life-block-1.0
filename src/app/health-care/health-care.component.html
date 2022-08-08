@@ -163,7 +163,8 @@
                         ngModel
                         name="means-of-death">
                     </div> -->
-                    <button class="btn btn-primary" type="submit" style='margin-right:16px'>Submit</button>
+                    <button [disabled]="isLoading" class="btn btn-primary" type="submit" style='margin-right:16px'>
+                        <img *ngIf="isLoading" width="20px" src="../../assets/img/spinner.gif"/> Submit</button>
                 </div>
             </form>
         </div>

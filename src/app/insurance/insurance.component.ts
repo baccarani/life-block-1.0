@@ -17,7 +17,10 @@ export class InsuranceComponent implements OnInit {
   public manager;
   public value;
   public balance;
+  public isLoading = false;
+  public isSuccess = false;
 
+ 
   constructor(private blockchainService: BlockchainService) { }
 
   async ngOnInit() {
@@ -73,6 +76,9 @@ export class InsuranceComponent implements OnInit {
 
 
     async onEnter(form: NgForm) {
+
+
+      this.isLoading = true
       await policy.methods.enter().send({
         from: this.manager,
         value: web3.utils.toWei(form.value.amount, 'ether')
@@ -86,11 +92,23 @@ export class InsuranceComponent implements OnInit {
       console.log('Function onEnter() complete, amount entered is = ' + web3.utils.toWei(form.value.amount, 'ether'));
       
       
+      this.isLoading = false
+      this.isSuccess = true
+
+      setTimeout(function(){
+        console.log("waited for: " + i + " seconds");
+        repeat();
+      }, 1000);
+
+
+
 
 
     }
 
     async payBeneficiaries() {
+      this.isLoading = true
+
       for (let index = 0; index < 1; index++) {
         console.log(index)
        if (this.reportStruct[index].meansOfDeath != 'Undetermined') {
@@ -103,9 +121,18 @@ export class InsuranceComponent implements OnInit {
         }
        
       }
+
+      this.isLoading = false
+
+
+
     }
+
+
     
     
   }
+
+
 
 

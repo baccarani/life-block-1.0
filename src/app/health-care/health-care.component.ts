@@ -24,6 +24,7 @@ export class HealthCareComponent implements OnInit {
   public medicalCauses = ['Heart Disease', 'Cancer', 'COVID-19', 'Accidents', 'Drowning'];
   public meansOfDeaths = ['Natural Cause', 'Accident', 'Homicide', 'Suicide', 'Undetermined'];
   public beneficiaries = [];
+  public isLoading = false;
 
   
 
@@ -85,6 +86,8 @@ export class HealthCareComponent implements OnInit {
 
 
   onSubmit = async (form: NgForm) => { 
+    this.isLoading = true
+
     console.log("onSubmit function called")
     console.log(form);
 
@@ -161,8 +164,6 @@ export class HealthCareComponent implements OnInit {
       this.balance = web3.utils.fromWei(this.balance, 'ether');
       console.log('Function getBalance() works, balance = ' + this.balance);
 
-
-
     } else {
       console.log('Beneficiaries not paid-out')
       this.balance = await web3.eth.getBalance(policy.options.address);
@@ -175,6 +176,7 @@ export class HealthCareComponent implements OnInit {
 
 
 
+    this.isLoading = false
 
     
 
@@ -184,6 +186,8 @@ export class HealthCareComponent implements OnInit {
 
 
   async payBeneficiaries() {
+    this.isLoading = true
+
     if (this.reportStruct[this.reportCount - 1].meansOfDeath != 'Undetermined') {
       await policy.methods.payBeneficiaries().send({from : this.manager});
       console.log('Beneficiaries paid-out');
@@ -210,7 +214,10 @@ export class HealthCareComponent implements OnInit {
     
     
 
+    this.isLoading = false
 
   }
+
+
 
 }

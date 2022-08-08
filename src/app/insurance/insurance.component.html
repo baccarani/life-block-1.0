@@ -1,6 +1,7 @@
 <h2>Insurance Policy Smart Contract</h2>
 
-<p>This contract is managed by {{ manager }}. The beneficiaries of this Life Insurance policy are:</p>
+<p>This contract is managed by {{ manager }}</p>
+<p>The beneficiaries of this Life Insurance policy are:</p>
 <li> {{beneficiaries[0]}}</li>
 <li> {{beneficiaries[1]}}</li>
 
@@ -20,10 +21,18 @@
                         ngModel
                         name="amount">
                     </div>
-                    <button class="btn btn-primary" type="submit" style='margin-right:16px'>Enter Amount</button>
-                    <button class="btn btn-default" type="submit" style='margin-right:16px' (click)="payBeneficiaries()">Pay Beneficiaries</button>
+                    <div>
+                        <button [disabled]="isLoading" class="btn btn-primary" type="submit" style='margin-right:16px'>
+                            <img *ngIf="isLoading" width="20px" src="../../assets/img/spinner.gif"/> Enter Amount</button>
+                        <button [disabled]="isLoading" class="btn btn-default" type="button" style='margin-right:16px' (click)="payBeneficiaries()">
+                            <img *ngIf="isLoading" width="20px" src="../../assets/img/spinner.gif"/> Pay Beneficiaries</button>
+                    </div> <br>
+                    <div *ngIf="isSuccess" class="alert alert-success">
+                        <strong>Success!</strong> Indicates a successful or positive action.
+                      </div>
                 </div>
             </form>
         </div>
     </div>
 </div>
+

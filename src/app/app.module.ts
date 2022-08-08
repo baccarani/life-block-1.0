@@ -19,6 +19,7 @@ import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.compon
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 import { HealthCareComponent } from './health-care/health-care.component';
 import { InsuranceComponent } from './insurance/insurance.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { InsuranceComponent } from './insurance/insurance.component';
     RecipeStartComponent,
     RecipeEditComponent,
     HealthCareComponent,
-    InsuranceComponent
+    InsuranceComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

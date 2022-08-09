@@ -19,6 +19,7 @@ export class InsuranceComponent implements OnInit {
   public balance;
   public isLoading = false;
   public isSuccess = false;
+  public reportCount;
 
  
   constructor(private blockchainService: BlockchainService) { }
@@ -95,11 +96,11 @@ export class InsuranceComponent implements OnInit {
       this.isLoading = false
       this.isSuccess = true
 
-      setTimeout(function(){
-        console.log("waited for: " + i + " seconds");
-        repeat();
-      }, 1000);
+     
 
+      setTimeout(() => {
+        this.isSuccess = false
+      }, 10000);
 
 
 
@@ -109,23 +110,18 @@ export class InsuranceComponent implements OnInit {
     async payBeneficiaries() {
       this.isLoading = true
 
-      for (let index = 0; index < 1; index++) {
-        console.log(index)
-       if (this.reportStruct[index].meansOfDeath != 'Undetermined') {
-          console.log('if statement working')
-          await policy.methods.payBeneficiaries().send({from : this.manager});
- 
- 
-        } else {
-          console.log('else statement working')
-        }
-       
+      this.reportCount = this.reportCount =  await report.methods.getReportsCount().call();
+  
+      if (this.reportStruct[this.reportCount - 1].meansOfDeath != 'Undetermined') {
+        await policy.methods.payBeneficiaries().send({from : this.manager});
+        console.log('Beneficiaries paid-out');
+  
+  
+      } else {
+        console.log('Beneficiaries not paid-out')
       }
-
+  
       this.isLoading = false
-
-
-
     }
 
 

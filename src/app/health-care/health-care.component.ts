@@ -25,6 +25,8 @@ export class HealthCareComponent implements OnInit {
   public meansOfDeaths = ['Natural Cause', 'Accident', 'Homicide', 'Suicide', 'Undetermined'];
   public beneficiaries = [];
   public isLoading = false;
+  public isSuccess = false;
+  public isError = false;
 
   
 
@@ -163,61 +165,27 @@ export class HealthCareComponent implements OnInit {
       this.balance = await web3.eth.getBalance(policy.options.address);
       this.balance = web3.utils.fromWei(this.balance, 'ether');
       console.log('Function getBalance() works, balance = ' + this.balance);
+      
+      this.isSuccess = true
+      setTimeout(() => {
+        this.isSuccess = false
+      }, 10000);
 
     } else {
       console.log('Beneficiaries not paid-out')
       this.balance = await web3.eth.getBalance(policy.options.address);
       this.balance = web3.utils.fromWei(this.balance, 'ether');
       console.log('Function getBalance() works, balance = ' + this.balance);
+
+      this.isError = true
+      setTimeout(() => {
+        this.isError = false
+      }, 10000);
     }
-
-
-
-
-
-
-    this.isLoading = false
-
-    
-
-
-
-  }
-
-
-  async payBeneficiaries() {
-    this.isLoading = true
-
-    if (this.reportStruct[this.reportCount - 1].meansOfDeath != 'Undetermined') {
-      await policy.methods.payBeneficiaries().send({from : this.manager});
-      console.log('Beneficiaries paid-out');
-
-
-    } else {
-      console.log('Beneficiaries not paid-out')
-    }
-  }
-
-
-  async onEnter(form: NgForm) {
-    await policy.methods.enter().send({
-      from: this.manager,
-      value: web3.utils.toWei(form.value.amount, 'ether')
-    });
-
-
-    this.balance = await web3.eth.getBalance(policy.options.address);
-    this.balance = web3.utils.fromWei(this.balance, 'ether');
-
-
-    console.log('Function onEnter() complete, amount entered is = ' + web3.utils.toWei(form.value.amount, 'ether'));
-    
-    
 
     this.isLoading = false
 
   }
-
 
 
 }

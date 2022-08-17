@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import web3 from '../web3';
+import detectEthereumProvider from '@metamask/detect-provider'
+
 
 
 @Component({
@@ -14,9 +16,17 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onConnectMetamask() {
+  async onConnectMetamask() {
     console.log('Web3 version = ' + web3.version);
     web3.eth.getAccounts().then(console.log);
+
+    const provider = await detectEthereumProvider()
+    console.log(provider);
+
+
+    
+
+
   }
 
 }

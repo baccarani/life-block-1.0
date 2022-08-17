@@ -3,6 +3,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { HealthCareComponent } from "./health-care/health-care.component";
 import { HomeComponent } from "./home/home.component";
 import { InsuranceComponent } from "./insurance/insurance.component";
+import { LoginComponent } from "./login/login.component";
 import { RecipeDetailComponent } from "./recipes/recipe-detail/recipe-detail.component";
 import { RecipeEditComponent } from "./recipes/recipe-edit/recipe-edit.component";
 import { RecipeStartComponent } from "./recipes/recipe-start/recipe-start.component";
@@ -21,6 +22,7 @@ const appRoutes: Routes = [
     { path: 'shopping-list', component: ShoppingListComponent },
     { path: 'insurance', component: InsuranceComponent },
     { path: 'health-care', component: HealthCareComponent },
+    { path: 'login', component: LoginComponent },
 ]
 
 @NgModule({

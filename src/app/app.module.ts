@@ -20,6 +20,8 @@ import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component
 import { HealthCareComponent } from './health-care/health-care.component';
 import { InsuranceComponent } from './insurance/insurance.component';
 import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -36,13 +38,15 @@ import { HomeComponent } from './home/home.component';
     RecipeEditComponent,
     HealthCareComponent,
     InsuranceComponent,
-    HomeComponent
+    HomeComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule
   ],
   providers: [ShoppingListService, BlockchainService],
   bootstrap: [AppComponent]

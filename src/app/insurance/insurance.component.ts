@@ -25,54 +25,38 @@ export class InsuranceComponent implements OnInit {
   constructor(private blockchainService: BlockchainService) { }
 
   async ngOnInit() {
-    this.blockchainService.sharedMessage.subscribe(test => console.log(test));
+    // this.blockchainService.sharedMessage.subscribe(test => console.log(test));
     
-    this.balance = await web3.eth.getBalance(policy.options.address);
-    this.balance = web3.utils.fromWei(this.balance, 'ether');
-    console.log('Function getBalance() works, balance = ' + this.balance);
+    // this.balance = await web3.eth.getBalance(policy.options.address);
+    // this.balance = web3.utils.fromWei(this.balance, 'ether');
+    // console.log('Function getBalance() works, balance = ' + this.balance);
     
   }
 
 
   async ngAfterContentInit() {
 
-    this.manager = await report.methods.manager().call();
-    console.log('This contract is managed by ' + this.manager);
+    // this.manager = await report.methods.manager().call();
+    // console.log('This contract is managed by ' + this.manager);
 
-    this.beneficiaries = await policy.methods.getBeneficiaries().call();
-    console.log('Function getBeneficiaries() = ' + this.beneficiaries);
-
-
-    this.reportStruct = await report.methods.getReports().call();
-    console.log(this.blockchainService.nextMessage(this.reportStruct));
-
-    console.log(this.reportStruct);
-    console.log(this.reportStruct.length);
-    console.log(this.reportStruct[0].recipient);
+    // this.beneficiaries = await policy.methods.getBeneficiaries().call();
+    // console.log('Function getBeneficiaries() = ' + this.beneficiaries);
 
 
-    
-    this.balance = await web3.eth.getBalance(policy.options.address);
-    this.balance = web3.utils.fromWei(this.balance, 'ether');
-    console.log('Function getBalance() works, balance = ' + this.balance);
+    // this.reportStruct = await report.methods.getReports().call();
+    // console.log(this.blockchainService.nextMessage(this.reportStruct));
 
+    // console.log(this.reportStruct);
+    // console.log(this.reportStruct.length);
+    // console.log(this.reportStruct[0].recipient);
 
 
     
+    // this.balance = await web3.eth.getBalance(policy.options.address);
+    // this.balance = web3.utils.fromWei(this.balance, 'ether');
+    // console.log('Function getBalance() works, balance = ' + this.balance);
 
 
-
-     
-
-
-
-      // if (this.reportStruct[0].meansOfDeath != 'Undetermined') {
-      //   console.log('if statement, payout')
-
-      // } else {
-      //   console.log('else statement working, do not pay out')
-      // }
-      
     }
 
 

@@ -37,49 +37,48 @@ export class HealthCareComponent implements OnInit {
 
   async ngOnInit() {
 
-    console.log('Web3 version = ' + web3.version);
+    // console.log('Web3 version = ' + web3.version);
 
-    web3.eth.getAccounts().then(console.log);
+    // web3.eth.getAccounts().then(console.log);
 
-    this.balance = await web3.eth.getBalance(policy.options.address);
-    this.balance = web3.utils.fromWei(this.balance, 'ether');
-    console.log('Function getBalance() works, balance = ' + this.balance);
+    // this.balance = await web3.eth.getBalance(policy.options.address);
+    // this.balance = web3.utils.fromWei(this.balance, 'ether');
+    // console.log('Function getBalance() works, balance = ' + this.balance);
 
-    this.beneficiaries = await policy.methods.getBeneficiaries().call();
-    console.log('Function getBeneficiaries() = ' + this.beneficiaries);
+    // this.beneficiaries = await policy.methods.getBeneficiaries().call();
+    // console.log('Function getBeneficiaries() = ' + this.beneficiaries);
 
   }
 
   async ngAfterContentInit() {
-    this.manager = await report.methods.manager().call();
-    console.log('This contract is managed by = ' + this.manager);
-    console.log('This contract is managed by (BlockchainService) = ' + this.blockchainService.manager);
+    // this.manager = await report.methods.manager().call();
+    // console.log('This contract is managed by = ' + this.manager);
+    // console.log('This contract is managed by (BlockchainService) = ' + this.blockchainService.manager);
 
-    this.players = await report.methods.getPlayers().call();
-    console.log('Function getPlayers() = ' + this.players)
-
-
-    console.log('Function getReportsCount() to display list array of  Reports = ' + this.reportList);
+    // this.players = await report.methods.getPlayers().call();
+    // console.log('Function getPlayers() = ' + this.players)
 
 
-    this.reportCount =  await report.methods.getReportsCount().call();
-    console.log('Function getReportsCount() works, Type reportCount = ' + this.reportCount);
+    // console.log('Function getReportsCount() to display list array of  Reports = ' + this.reportList);
+
+
+    // this.reportCount =  await report.methods.getReportsCount().call();
+    // console.log('Function getReportsCount() works, Type reportCount = ' + this.reportCount);
 
     
-    this.reportStruct = await report.methods.getReports().call();
-    this.blockchainService.nextMessage(this.reportStruct);
-    console.log('Report struct from BlockchainService = ' + this.blockchainService.getReportStruct()); 
-    console.log('Report struct = ' + this.reportStruct); 
-    console.log('Report struct one whole item = ' + this.reportStruct[0]);
-    // console.log('Report struct name = ' + this.reportStruct[0].name);
+    // this.reportStruct = await report.methods.getReports().call();
+    // this.blockchainService.nextMessage(this.reportStruct);
+    // console.log('Report struct from BlockchainService = ' + this.blockchainService.getReportStruct()); 
+    // console.log('Report struct = ' + this.reportStruct); 
+    // console.log('Report struct one whole item = ' + this.reportStruct[0]);
 
 
-    console.log('Function createReport is called and = ' + this.reports);
+    // console.log('Function createReport is called and = ' + this.reports);
 
 
-    this.reportCount =  await report.methods.getReportsCount().call();
-    console.log(this.reportCount - 1)
-    console.log('Report struct meansofDeath = ' + this.reportStruct[this.reportCount - 1].meansOfDeath);
+    // this.reportCount =  await report.methods.getReportsCount().call();
+    // console.log(this.reportCount - 1)
+    // console.log('Report struct meansofDeath = ' + this.reportStruct[this.reportCount - 1].meansOfDeath);
 
     
     

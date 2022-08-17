@@ -54,37 +54,37 @@ export class BlockchainService {
 
   ngOnInit(): void {
 
-    // console.log('Web3 version = ' + web3.version);
+    console.log('Web3 version = ' + web3.version);
 
-    // web3.eth.getAccounts().then(console.log);
+    web3.eth.getAccounts().then(console.log);
 
   }
 
   async ngAfterContentInit() {
-    // this.manager = await report.methods.manager().call();
-    // console.log('This contract is managed by ' + this.manager);
+    this.manager = await report.methods.manager().call();
+    console.log('This contract is managed by ' + this.manager);
 
-    // this.players = await report.methods.getPlayers().call();
-    // console.log('Function getPlayers() = ' + this.players)
+    this.players = await report.methods.getPlayers().call();
+    console.log('Function getPlayers() = ' + this.players)
 
-    // this.balance = await web3.eth.getBalance(report.options.address);
-    // this.balance = web3.utils.fromWei(this.balance, 'ether')
-    // console.log('Function getBalance() = ' + this.balance)
+    this.balance = await web3.eth.getBalance(report.options.address);
+    this.balance = web3.utils.fromWei(this.balance, 'ether')
+    console.log('Function getBalance() = ' + this.balance)
 
-    // console.log('Function getReportsCount() to display list array of  Reports = ' + this.reportList);
+    console.log('Function getReportsCount() to display list array of  Reports = ' + this.reportList);
 
 
-    // this.reportCount =  await report.methods.getReportsCount().call();
-    // console.log('Function getReportsCount() works, Type reportCount = ' + this.reportCount);
+    this.reportCount =  await report.methods.getReportsCount().call();
+    console.log('Function getReportsCount() works, Type reportCount = ' + this.reportCount);
 
     
-    // this.reportStruct = await report.methods.getReports().call();
-    // console.log('Report struct = ' + this.reportStruct);
-    // console.log('Report struct one whole item = ' + this.reportStruct[0]);
-    // console.log('Report struct name = ' + this.reportStruct[0].name);
+    this.reportStruct = await report.methods.getReports().call();
+    console.log('Report struct = ' + this.reportStruct);
+    console.log('Report struct one whole item = ' + this.reportStruct[0]);
+    console.log('Report struct name = ' + this.reportStruct[0].name);
 
 
-    // console.log('Function createReport is called and = ' + this.reports);
+    console.log('Function createReport is called and = ' + this.reports);
 
 
 

@@ -21,6 +21,7 @@
     "@angular/platform-browser": "^11.0.5",
     "@angular/platform-browser-dynamic": "^11.0.5",
     "@angular/router": "^11.0.5",
+    "@metamask/providers": "^9.1.0",
     "assert": "^2.0.0",
     "bootstrap": "3.3.7",
     "crypto-browserify": "^3.12.0",

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import web3 from '../web3';
 import detectEthereumProvider from '@metamask/detect-provider'
+import { BlockchainService } from '../blockchain.service';
 
 
 
@@ -11,7 +12,7 @@ import detectEthereumProvider from '@metamask/detect-provider'
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  constructor(private blockchainService: BlockchainService) { }
 
   ngOnInit(): void {
   }
@@ -21,7 +22,14 @@ export class LoginComponent implements OnInit {
     web3.eth.getAccounts().then(console.log);
 
     const provider = await detectEthereumProvider()
-    console.log(provider);
+    console.log("detectEthereumProvider() is working, and = " + provider);
+    console.log(window.ethereum)
+
+    await detectEthereumProvider() 
+
+
+    // return await ethereum.request({ method: 'eth_requestAccounts' });
+
 
 
     

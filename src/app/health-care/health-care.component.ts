@@ -100,7 +100,7 @@ export class HealthCareComponent implements OnInit {
 
 
 
-    await report.methods.createRequest()
+    // await report.methods.createRequest()
 
     console.log(form.value.name)
 

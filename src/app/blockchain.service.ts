@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, from } from 'rxjs';
 import web3 from './web3';
 import report from './report';
 import policy from './policy';
 import { NgForm } from '@angular/forms';
+import detectEthereumProvider from '@metamask/detect-provider';
 
 
 @Injectable()
@@ -181,5 +182,19 @@ export class BlockchainService {
       }
     
   }
+
+
+
+
+  public signInWithMetaMask() {
+    let ethereum: any;
+
+  return from(detectEthereumProvider()).pipe()
+
+
+  }
+
+
+
 
 }

@@ -1,0 +1,22 @@
+.menu {
+    @media (max-width: $menuBreakpoint) {
+        display: none;
+
+        &.is-open {
+            display: block;
+            position: absolute;
+            top: #{$menuHeight + 2};
+            width: 100%;
+            
+            .menu-item {
+                border-bottom: 1px solid #cccccc;
+            }
+        }
+    }
+}
+
+.dropdown {
+    @media (max-width: $menuBreakpoint) {
+        display: block;
+    }
+}
